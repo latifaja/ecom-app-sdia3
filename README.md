@@ -20,13 +20,7 @@ Dans ce projet, j'ai **créer ma première application basée sur une architectu
 
 ## Architecture Générale
 
-```
-[Client] → [gateway-service] → [discovery-service] → [customer-service]
-                                   ↑                 → [inventory-service]
-                                   ↑                 → [billing-service]
-                                   ↓
-                             [config-service] ← (Git Repo)
-```
+<img src="images/1.png">
 
 ---
 
@@ -157,6 +151,7 @@ public class RestRepositoryConfig implements RepositoryRestConfigurer {
 > Maintenant, `GET /api/customers` renvoie les `id`.
 
 ---
+<img src="images/2.png">
 
 ## Projections (Vues Partielles)
 
@@ -211,6 +206,9 @@ management.endpoints.web.exposure.include=*
 | `/actuator/health` | Vérifie si le service est **UP** |
 | `/actuator/info` | Infos personnalisées |
 | `/actuator/refresh` | Rafraîchir la config (POST) |
+
+<img src="images/3.png">
+
 
 > Kubernetes utilise `/actuator/health` pour les **health checks**.
 
@@ -270,6 +268,7 @@ spring:
 > Accès via :  
 > `http://localhost:8888/api/customers`
 
+![img.png](img.png)
 ---
 
 # 3. Discovery Service (Eureka)
@@ -319,6 +318,8 @@ eureka.instance.prefer-ip-address=true
 
 > Les services apparaissent dans le tableau de bord Eureka.
 
+![img_1.png](img_1.png)
+
 ---
 
 ## Approche Dynamique dans le Gateway
@@ -362,12 +363,14 @@ DiscoveryClientRouteDefinitionLocator locator(
 ```
 http://localhost:8888/CUSTOMER-SERVICE/api/customers
 ```
+![img_2.png](img_2.png)
 
 > Pour autoriser les minuscules :
 
 ```properties
 spring.cloud.gateway.discovery.locator.lower-case-service-id=true
 ```
+![img_3.png](img_3.png)
 
 ---
 
@@ -526,13 +529,7 @@ spring.cloud.config.server.git.uri=file:///C:/Users/JAK/IdeaProjects/ecom-app-sd
 
 ## Structure du Repo Git (`config-repo/`)
 
-```
-application.yml
-customer-service.yml
-inventory-service.yml
-billing-service.yml
-```
-
+![img_7.png](img_7.png)
 ---
 
 ## Activer Config Client (ex: customer-service)
